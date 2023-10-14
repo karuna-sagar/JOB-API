@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const authRouter = require('./routes/auth')
 const jobRouter = require('./routes/jobs');
-
+const authenticateUser = require('./middleware/authentication')
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
@@ -20,7 +20,7 @@ const connectDB = require('./db/connect');
 // });
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/job', jobRouter);
+app.use('/api/v1/job', authenticateUser, jobRouter);
 
 
 app.use(notFoundMiddleware);
